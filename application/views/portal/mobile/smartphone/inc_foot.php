@@ -1,0 +1,298 @@
+
+</div>
+
+<!-- Begin Right Sidebar Here -->
+<div class="sidebar">
+
+    <? if (sizeof($Ringtones) > 0): ?>
+    <div class="widget-wrapper">
+
+        <div class="widget">
+
+            <div class="section-wrapper">
+                <div class="section">LATEST RINGTONES</div>
+            </div>
+
+            <div id="tabbed-reviews-compact" class="complex-list compact">
+
+                <ul class="tabnav">
+                    <? foreach ($Ringtones as $type=> $items): ?>
+                    <li><a href="#ringtones_<?=md5("ringtones_{$type}")?>"><?=$type?></a></li>
+                    <? endforeach; ?>
+                </ul>
+
+                <br class="clearer"/>
+
+                <div class="tabdiv-wrapper">
+
+                    <? foreach ($Ringtones as $type=> $items): ?>
+                    <div id="ringtones_<?=md5("ringtones_{$type}")?>" class="tabdiv">
+
+                        <ul>
+                            <? foreach ($items as $item): ?>
+                            <li>
+
+                                <div class="rating-wrapper small">
+                                    <div class="number color4"><?=$item['preview']['protected']?></div>
+                                </div>
+
+                                <a class="post-title"
+                                   href="{DocumentRoot}/{ProductPath}/item/{Country}/{Keyword}/<?=$item['id']?>/<?=preg_replace("/[^0-9A-Za-z\-]/", "", $item['title']) ?>"
+                                   title="<?=$item['artist']?> &#8211; <?=$item['title']?>"><?=$item['artist']?>
+                                    &#8211; <?=$item['title']?></a>
+
+                                <br class="clearer"/>
+
+                            </li>
+                            <? endforeach; ?>
+
+                            <li class="more" title="View all <?=$type?> songs"><a
+                                href="{DocumentRoot}/{ProductPath}/content/{Country}/{Keyword}/<?=$type?>">More</a></li>
+                            <li class="last">&nbsp;</li>
+
+                        </ul>
+
+                    </div>
+                    <? endforeach; ?>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <? endif; ?>
+
+    <? if (sizeof($Videos) > 0): ?>
+    <div class="complex-list all_reviews">
+
+        <div class="widget-wrapper">
+
+            <div class="widget">
+                <div class="section-wrapper">
+                    <div class="section">POPULAR VIDEOS</div>
+                </div>
+
+                <div class="tabdiv">
+                    <ul>
+
+                        <? $i = 0; foreach ($Videos as $item): ?>
+                        <li class="<? if ($i++ == 0) echo "first"; ?>">
+
+                            <div class="floatleft">
+
+                                <a href="{DocumentRoot}/{ProductPath}/item/{Country}/{Keyword}/<?=$item['id']?>/<?=preg_replace("/[^0-9A-Za-z\-]/", "", $item['title']) ?>"
+                                   class="thumbnail darken small"
+                                   title="<?=$item['title']?>"><?= sprintf($item['preview']['mobile'], 70, 70); ?></a>
+                            </div>
+
+                            <div class="floatleft">
+                                <a class="post-title"
+                                   href="{DocumentRoot}/{ProductPath}/item/{Country}/{Keyword}/<?=$item['id']?>/<?=preg_replace("/[^0-9A-Za-z\-]/", "", $item['title']) ?>"
+                                   title="<?=$item['title']?>"><?=$item['title']?></a>
+                                <br class="clearer"/>
+                            </div>
+
+                            <br class="clearer"/>
+
+                        </li>
+                        <? endforeach; ?>
+
+                        <li class="more" title="View all videos"><a
+                            href="{DocumentRoot}/{ProductPath}/content/{Country}/{Keyword}/videos">More</a></li>
+
+                        <li class="last">&nbsp;</li>
+
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <? endif; ?>
+
+</div>
+
+</div>
+
+<br class="clearer"/>
+<br/>
+
+</div>
+
+
+<!--begin footer wrapper -->
+<div id="footer-wrapper">
+
+<div id="footer">
+
+<div class="footer-menu">
+
+    <a class="home-link" href="index.php">&nbsp;</a>
+
+    <ul id="menu-footer-menu" class="menu">
+        <?php foreach($MainMenu as $link): ?>
+        <li><a href="<?=$link['url']?>"><?=$link['label']?></a></li>
+        <?php endforeach; ?>
+    </ul>
+
+</div>
+
+<br class="clearer" />
+
+<div class="inner">
+
+
+    <div class="complex-list all_reviews small">
+
+        <div class="widget">
+
+            <h2>Terms and Conditions</h2>
+
+            <div class="textwidget">
+
+                <p>{Terms_And_Conditions}</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+<br class="clearer" />
+
+</div>
+
+<div class="copyright">
+
+    <div class="ribbon-shadow-left">&nbsp;</div>
+
+    <div class="floatright">
+        <div class="floatleft">
+            <div class="textwidget"><p>Powered by <a href="http://www.mobivate.com">Mobivate</a> © <?=date("Y")?></p></div>
+        </div>
+    </div>
+
+    <br class="clearer" />
+
+    <div class="ribbon-shadow-right">&nbsp;</div>
+
+</div>
+
+</div>
+
+</div> <!--end footer wrapper-->
+
+<script type="text/javascript" src="/css/portal/web/js/plugins.js"></script> <!-- jquery plugin js -->
+
+<!-- need to setup review category tabs here since we don't know how many review types there are -->
+<script type="text/javascript">
+    jQuery.noConflict();
+
+    //DOCUMENT.READY
+    jQuery(document).ready(function() {
+        //loop through each post type and setup a jquery tabs object
+        jQuery('#tabbed-Restaurant-reviews > ul').tabs({ fx: { opacity: 'toggle', duration: 150 } });
+        jQuery('#tabbed-Music-reviews > ul').tabs({ fx: { opacity: 'toggle', duration: 150 } });
+        jQuery('#tabbed-Movie-reviews > ul').tabs({ fx: { opacity: 'toggle', duration: 150 } });
+        jQuery('#tabbed-Fashion-reviews > ul').tabs({ fx: { opacity: 'toggle', duration: 150 } });
+        jQuery('#tabbed-Product-reviews > ul').tabs({ fx: { opacity: 'toggle', duration: 150 } });
+
+        //colorbox
+        jQuery('.review .article-image a').colorbox({transition:'fade', speed:250});
+        jQuery('.single-post .content .article-image a').colorbox({transition:'fade', speed:250});
+        jQuery('.colorbox').colorbox({transition:'fade', speed:250});
+        jQuery('.colorboxiframe').colorbox({transition:'fade', speed:250, iframe:true, innerWidth:640, innerHeight:390});
+        jQuery(".page-content a[href$='.jpg'],a[href$='.png'],a[href$='.gif']").colorbox();
+        jQuery('.page-content .gallery a').colorbox({  rel:'gallery' });
+
+        //initialize smooth div scroll on Don't Miss slider
+        jQuery("#dontmiss").smoothDivScroll({
+            autoScrollingMode: "always",
+            autoScrollingDirection: "endlessloopright",
+            autoScrollingStep: 1,
+            autoScrollingInterval: 50
+        });
+
+        // Logo parade event handlers
+        jQuery("#dontmiss").bind("mouseover", function() {
+            jQuery(this).smoothDivScroll("stopAutoScrolling");
+        }).bind("mouseout", function() {
+                    jQuery(this).smoothDivScroll("startAutoScrolling");
+                });
+
+        /* uitotop scroller:
+              var defaults = {
+                    containerID: 'toTop', // fading element id
+                  containerHoverID: 'toTopHover', // fading element hover id
+                  scrollSpeed: 1200,
+                  easingType: 'linear'
+               };
+              */
+
+        jQuery().UItoTop({ easingType: 'easeOutExpo' });
+
+    });
+
+    //the reason they are here instead of in custom.js is because they contain php variables which can't
+    //be applied in a .js file. Also, make sure these come before the darken function.
+
+    //WINDOW.LOAD
+    jQuery(window).load(function() {
+        //spotlight slider
+        jQuery(function() {
+            jQuery(".main-content-left #spotlight-slider, .main-content-left #spotlight-slider-responsive").jCarouselLite({
+                auto: 3000,
+                easing: "easeInOutExpo",
+                speed: 1100,
+                visible: 2
+            });
+        });
+        jQuery(function() {
+            jQuery(".main-content #spotlight-slider, .main-content #spotlight-slider-responsive").jCarouselLite({
+                auto: 3000,
+                easing: "easeInOutExpo",
+                speed: 1100,
+                visible: 3
+            });
+        });
+        //featured slider
+        jQuery('#featured').nivoSlider({
+            effect: 'random', // Specify sets like: 'fold,fade,sliceDown'
+            slices: 10, // For slice animations
+            boxCols: 6, // For box animations
+            boxRows: 3, // For box animations
+            animSpeed: 200, // Slide transition speed
+            pauseTime: 3000, // How long each slide will show
+            startSlide: 0, // Set starting Slide (0 index)
+            directionNav: true, // Next and Prev navigation
+            directionNavHide: false, // Only show on hover
+            controlNav: false, // 1,2,3... navigation
+            controlNavThumbs: false, // Use thumbnails for Control Nav
+            pauseOnHover: true, // Stop animation while hovering
+            manualAdvance: false, // Force manual transitions
+            prevText: 'Prev', // Prev directionNav text
+            nextText: 'Next', // Next directionNav text
+            beforeChange: function(){}, // Triggers before a slide transition
+            afterChange: function(){}, // Triggers after a slide transition
+            slideshowEnd: function(){}, // Triggers after all slides have been shown
+            lastSlide: function(){}, // Triggers when last slide is shown
+            afterLoad: function(){} // Triggers when slider has loaded
+        });
+
+    });
+</script>
+
+<script type="text/javascript" src="/css/portal/web/js/custom.js"></script>
+
+</div>
+
+{WRAPPER_END}
+
+</html>

@@ -1,0 +1,12 @@
+*{font-family: Verdana, Geneva, sans-serif;}
+strong, b {
+    font-weight: bold;
+}
+.c1 {
+    text-align: center;
+}
+
+body, td {
+    color: black;
+    font-size: 9pt;
+}

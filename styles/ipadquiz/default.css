@@ -1,0 +1,25 @@
+* { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; } 
+
+body {
+	background-repeat: repeat-x;
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	background-color: #060606;
+	background-image:url(images/bg.jpg);
+	background-repeat:repeat-x;
+	background-position:top;
+}
+
+.footer { 
+	background-image:url(images/footer.jpg);
+	background-repeat:no-repeat;
+	padding-top:20px;
+}
+
+.footer, .footer a { 
+	font-size:11px;
+	color:#EEE;
+
+}

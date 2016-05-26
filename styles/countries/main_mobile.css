@@ -1,0 +1,13 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+strong, b {
+    font-weight: bold;
+}
+.c1 {
+    text-align: center;
+}
+body, td {
+    font-size: 10px;
+    color: black;
+}

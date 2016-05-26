@@ -1,0 +1,92 @@
+SM="/home/SHARED/SiteManager"
+own=""
+
+if [ $USER = "root" ] ; then
+ owner=$(stat -c '%U' .)
+ own="sudo -u$owner"
+fi
+
+echo " *** Hello $USER, Let's setup some SiteManager files! ***"
+
+echo "What is the path to this SiteManager in relation to the HTTP DocumentRoot (default: /)? :"
+read base
+if [ -z $base ] ; then
+  base=/
+fi
+
+if [ -f ./index.php ] ; then 
+ echo
+ echo " - Remove existing index file"
+ rm -f ./index.php
+fi
+
+echo " + Creating index file";
+$own ln -s $SM/index.php ./index.php
+
+
+if [ -f ./previews ] ; then
+ echo
+ echo " - Remove existing previews link"
+ rm -f ./previews
+fi
+
+if [ -d ./previews ] ; then
+ echo
+ echo " - Remove existing previews folder"
+ rm -rf ./previews
+fi
+
+echo " + Creating previews link";
+$own ln -s /home/SHARED/previews ./previews
+
+
+if [ -f ./getDataFromMCS.php ] ; then
+ echo 
+ echo " - Remove existing getDataFromMCS file"
+ rm -f ./getDataFromMCS.php
+fi
+
+echo " + Create getDataFromMCS.php file";
+$own ln -s $SM/styles/portal/web/getData.php ./getDataFromMCS.php
+
+if [ -f ./css ] ; then
+ echo 
+ echo " - Remove existing css file"
+ rm -f ./css
+fi
+
+if [ -d ./css ] ; then
+ echo
+ echo " - Remove existing css folder"
+ rm -f ./css
+fi
+
+echo " + Creating CSS folder";
+$own ln -s $SM"/styles" ./css
+
+if [ -f ./.htaccess ] ; then
+ echo 
+ echo " - Remove existing .htaccess file, but here is what's in it if you wish to save some of it!"
+ echo 
+ echo "#--- START ---"
+ cat ./.htaccess
+ echo "#--- END ---"
+ echo 
+rm -f ./.htaccess
+fi
+
+echo " + Create .htaccess file";
+$own echo "RewriteEngine on" > ./.htaccess
+$own echo "RewriteBase $base" >> ./.htaccess
+$own echo "Options FollowSymLinks" >> ./.htaccess
+$own echo "RewriteRule (.*)getData.php(.*) /getDataFromMCS.php?%{QUERY_STRING} [L,NC]" >> ./.htaccess
+$own echo "RewriteCond %{REQUEST_FILENAME} !-f" >> ./.htaccess
+$own echo "RewriteCond %{REQUEST_FILENAME} !-d" >> ./.htaccess
+$own echo "RewriteRule ^(.*)$ $base""index.php?/\$1&%{QUERY_STRING} [L]" >> ./.htaccess 
+$own chmod 0666 ./.htaccess
+
+echo
+echo "*** DONE ***"
+echo " The site is now ready for inspection!"
+echo
+

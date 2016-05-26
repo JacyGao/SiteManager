@@ -1,0 +1,9 @@
+/* CSS Document */
+
+* { font-family:"Trebuchet MS", Arial, Helvetica, sans-serif; } 
+body { margin:2px; background:none; overflow:hidden;  }
+
+form, h2 { margin-top:0px; }
+body, h3, td, a { color:#FFFFFF; }
+
+img, div, a, input { behavior: url('/global/iepngfix/iepngfix.htc') }
