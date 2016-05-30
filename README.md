@@ -1,2 +1,2 @@
 # SiteManager
-Generated Website templates through GUI
+Generate Website templates through GUI
